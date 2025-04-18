@@ -1,12 +1,12 @@
 import React from "react";
 import { RxCross1 } from "react-icons/rx";
-import { useCartContext } from "../Context/CartContext";
 import { CartProduct } from "./CartProduct";
 import { Link } from "react-router-dom";
-// import CartItems from "./CartItems";
+import { useSelector } from "react-redux";
 
 export const Cart = ({ setShowCart }) => {
-  const { product } = useCartContext();
+  const {products} = useSelector((store) => store.products)
+
   return (
     <div
       className="bg-[#0000007d] w-full h-screen fixed left-0 top-0 z-20"
@@ -22,7 +22,7 @@ export const Cart = ({ setShowCart }) => {
         </h3>
 
         <div className="mt-6">
-          {product?.map((item) => (
+          {products?.map((item) => (
             <CartProduct key={item.id} item={item} />
           ))}
         </div>

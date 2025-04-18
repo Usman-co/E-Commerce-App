@@ -3,11 +3,13 @@ import { GoArrowRight } from "react-icons/go";
 import { useCartContext } from "../Context/CartContext";
 import { DeliveryMethods } from "./DeliveryMethods";
 import { PaymentMethods } from "./PaymentMethods";
+import { useSelector } from "react-redux";
 
 const Checkout = () => {
-  const { product } = useCartContext();
+  
+  const {products} = useSelector((store) => store.products)
 
-  const totalPrice = product.reduce(
+  const totalPrice = products.reduce(
     (price, item) => price + item.quantity * item.price,
     0
   );

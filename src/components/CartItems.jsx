@@ -4,27 +4,38 @@ import { HiMinusSm } from "react-icons/hi";
 import { IoAddSharp } from "react-icons/io5";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { OrderSummary } from "./OrderSummary";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../store";
 
 const CartItems = () => {
-  const {
-    product,
-    addToCart,
-    handleDcrementProduct,
-    handleClearCart,
-    deleteProduct,
-  } = useCartContext();
+  const {products} = useSelector((store) => store.products)
+  const dispatch = useDispatch()
 
- 
+  const addToCart = (product) =>{
+      dispatch(cartActions.addToCart(product))
+  }
+  
+  const handleDcrementProduct = (product) =>{
+    dispatch(cartActions.decrementProduct(product))
+  }
+
+  const deleteProduct = (product) =>{
+    dispatch(cartActions.removeProduct(product))
+  }
+  
+  const handleClearCart = () =>{
+    dispatch(cartActions.clearCart())
+  }
 
   return (
     <section className="container mt-8 bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0 relative">
         <div className="flex justify-between">
           <h3 className="font-medium text-2xl mb-4 px-4">Shopping Cart</h3>
-          {product.length >= 1 && (
+          {products.length >= 1 && (
             <button
               className="text-red-500 font-medium rounded-lg p-2 mb-2 flex border hover:scale-105 transition-transform border-gray-200 hover:border-gray-300"
-              onClick={() => handleClearCart(product)}
+              onClick={() => handleClearCart(products)}
             >
               Delete All
               <RiDeleteBin6Line className="mt-1 ml-1" />
@@ -32,14 +43,14 @@ const CartItems = () => {
           )}
         </div>
 
-        {product.length === 0 && (
+        {products.length === 0 && (
           <div className="font-medium text-xl text-gray-500">
             No product added to Cart yet!
           </div>
         )}
         <div className="grid xl:grid-cols-3 xl:grid-rows-2 gap-8 ">
           <div className="xl:col-span-2 xl:row-start-1 xl:row-end-[-1] gap-y-4 w-full font-medium max-sm:w-[90%] ">
-            {product.map((item) => (
+            {products.map((item) => (
               <div
                 className="flex justify-between items-center px-4 mb-6 max-md:flex-col border border-gray-200 hover:scale-105 transition-transform rounded-lg hover:border-gray-300 relative"
                 key={item.id}

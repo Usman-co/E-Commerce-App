@@ -1,13 +1,15 @@
 import { AiFillStar, AiOutlineShopping, AiOutlineStar } from "react-icons/ai";
 import { useCartContext } from "../Context/CartContext";
 import { toast } from "react-toastify";
+import { useDispatch} from "react-redux";
+import { cartActions } from "../store";
 
 const ProductCard = ({ item }) => {
-     const {addToCart} = useCartContext();
+     const dispatch = useDispatch()
 
      const addProductToCart =()=>{
       toast.success("Added to Cart")
-      addToCart(item)
+      dispatch(cartActions.addToCart(item))
      }
   return (
     <div className="border border-gray-200 hover:scale-105 transition-transform rounded-lg hover:border-gray-300">
